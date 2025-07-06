@@ -1,0 +1,521 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Will You Be My Valentine?</title>
+    <style>
+        body {
+            font-family: 'Comic Sans MS', 'Brush Script MT', cursive, sans-serif;
+            background-color: #fff0f5;
+            text-align: center;
+            margin: 0;
+            padding: 0;
+            overflow-x: hidden;
+            color: #d23369;
+        }
+        
+        /* Heart Opening Animation */
+        #heart-opening {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: #fff0f5;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            z-index: 10000;
+            animation: fadeOut 2s ease-in-out 3s forwards;
+        }
+        
+        .opening-heart {
+            font-size: 100px;
+            color: #ff4081;
+            animation: heartbeat 1.5s infinite, floatUp 3s ease-in-out forwards;
+            position: absolute;
+        }
+        
+        @keyframes heartbeat {
+            0% { transform: scale(1); }
+            25% { transform: scale(1.1); }
+            50% { transform: scale(1); }
+            75% { transform: scale(1.1); }
+            100% { transform: scale(1); }
+        }
+        
+        @keyframes floatUp {
+            to { transform: translateY(-100vh) rotate(360deg); opacity: 0; }
+        }
+        
+        @keyframes fadeOut {
+            to { opacity: 0; visibility: hidden; }
+        }
+        
+        .slide {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            padding: 20px;
+            position: absolute;
+            width: 100%;
+            transition: all 1s ease;
+            opacity: 0;
+            animation: fadeIn 1.5s ease-in-out 3s forwards;
+        }
+        
+        @keyframes fadeIn {
+            to { opacity: 1; }
+        }
+        
+        #main-content {
+            display: none;
+            padding: 40px;
+            background: url('floral-bg.jpeg') no-repeat center center;
+            background-size: cover;
+            min-height: 100vh;
+            animation: fadeIn 1.5s ease-in-out forwards;
+        }
+        
+        h1 {
+            font-size: 3.5em;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
+            margin-bottom: 20px;
+            background: linear-gradient(to right, #ff4081, #ff85a2);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            animation: textGlow 2s infinite alternate;
+        }
+        
+        @keyframes textGlow {
+            from { text-shadow: 0 0 10px rgba(255, 64, 129, 0.5); }
+            to { text-shadow: 0 0 20px rgba(255, 64, 129, 0.8); }
+        }
+        
+        .heart {
+            color: #ff4081;
+            font-size: 2em;
+            animation: pulse 1.5s infinite;
+        }
+        
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.3); }
+            100% { transform: scale(1); }
+        }
+        
+        .btn {
+            background: linear-gradient(45deg, #ff4081, #ff85a2);
+            color: white;
+            border: none;
+            padding: 20px 40px;
+            margin: 20px;
+            font-size: 1.8em;
+            border-radius: 50px;
+            cursor: pointer;
+            box-shadow: 0 8px 16px rgba(255, 64, 129, 0.3);
+            transition: all 0.3s;
+            font-weight: bold;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .btn:hover {
+            transform: scale(1.1);
+            box-shadow: 0 12px 20px rgba(255, 64, 129, 0.4);
+        }
+        
+        .btn:after {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(45deg, #ff85a2, #ff4081);
+            opacity: 0;
+            transition: all 0.3s;
+            z-index: -1;
+        }
+        
+        .btn:hover:after {
+            opacity: 1;
+        }
+        
+        .meme-img {
+            max-width: 90%;
+            max-height: 70vh;
+            border-radius: 15px;
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+            transition: all 0.5s ease;
+            animation: slideUp 1s ease-in-out forwards;
+        }
+        
+        @keyframes slideUp {
+            from { transform: translateY(50px); opacity: 0; }
+            to { transform: translateY(0); opacity: 1; }
+        }
+        
+        .zoom-out {
+            animation: zoomOut 3s forwards;
+        }
+        
+        @keyframes zoomOut {
+            from { transform: scale(1.5); opacity: 0; }
+            to { transform: scale(1); opacity: 1; }
+        }
+        
+        .valentine-container {
+            background-color: rgba(255, 255, 255, 0.9);
+            border-radius: 30px;
+            padding: 40px;
+            max-width: 700px;
+            margin: 0 auto;
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.1);
+            border: 5px solid #ff85a2;
+            position: relative;
+            overflow: hidden;
+            animation: containerEntrance 1s ease-in-out forwards;
+        }
+        
+        @keyframes containerEntrance {
+            from { transform: scale(0.9); opacity: 0; }
+            to { transform: scale(1); opacity: 1; }
+        }
+        
+        .valentine-container:before {
+            content: "";
+            position: absolute;
+            top: -10px;
+            left: -10px;
+            right: -10px;
+            bottom: -10px;
+            background: linear-gradient(45deg, #ff4081, #ff85a2, #ff4081);
+            z-index: -1;
+            border-radius: 35px;
+            animation: rotate 10s linear infinite;
+        }
+        
+        @keyframes rotate {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        
+        .continue-btn {
+            margin-top: 30px;
+            background: linear-gradient(45deg, #ff4081, #ff85a2);
+            color: white;
+            border: none;
+            padding: 15px 30px;
+            border-radius: 50px;
+            cursor: pointer;
+            font-size: 1.5em;
+            box-shadow: 0 8px 16px rgba(255, 64, 129, 0.3);
+            transition: all 0.3s;
+            animation: pulse 2s infinite;
+        }
+        
+        .continue-btn:hover {
+            transform: scale(1.05);
+            animation: none;
+        }
+        
+        .floral-decoration {
+            position: absolute;
+            width: 150px;
+            height: 150px;
+            opacity: 0.7;
+            z-index: -1;
+            animation: float 6s ease-in-out infinite;
+        }
+        
+        #floral1 {
+            top: -50px;
+            left: -50px;
+            transform: rotate(-30deg);
+        }
+        
+        #floral2 {
+            bottom: -50px;
+            right: -50px;
+            transform: rotate(30deg);
+        }
+        
+        #response {
+            font-size: 2em;
+            margin-top: 30px;
+            font-weight: bold;
+            color: #ff4081;
+            text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.1);
+            animation: textColorChange 3s infinite;
+        }
+        
+        @keyframes textColorChange {
+            0% { color: #ff4081; }
+            50% { color: #d23369; }
+            100% { color: #ff4081; }
+        }
+        
+        .floating-hearts {
+            position: fixed;
+            pointer-events: none;
+            z-index: 1000;
+            animation: float 5s ease-in-out infinite;
+        }
+        
+        @keyframes float {
+            0% { transform: translateY(0) rotate(0deg); opacity: 1; }
+            100% { transform: translateY(-100vh) rotate(360deg); opacity: 0; }
+        }
+        
+        .confetti {
+            position: fixed;
+            width: 10px;
+            height: 10px;
+            background-color: #ff4081;
+            opacity: 0;
+            z-index: 999;
+            animation: confetti 3s ease-out;
+        }
+        
+        @keyframes confetti {
+            0% { transform: translateY(0) rotate(0deg); opacity: 1; }
+            100% { transform: translateY(100vh) rotate(360deg); opacity: 0; }
+        }
+        
+        /* Slide transitions */
+        .slide.active {
+            opacity: 1;
+            z-index: 10;
+            animation: slideIn 1s ease-in-out forwards;
+        }
+        
+        .slide.inactive {
+            animation: slideOut 1s ease-in-out forwards;
+        }
+        
+        @keyframes slideIn {
+            from { transform: translateX(100%); opacity: 0; }
+            to { transform: translateX(0); opacity: 1; }
+        }
+        
+        @keyframes slideOut {
+            from { transform: translateX(0); opacity: 1; }
+            to { transform: translateX(-100%); opacity: 0; }
+        }
+    </style>
+</head>
+<body>
+    <!-- Heart Opening Animation -->
+    <div id="heart-opening">
+        <!-- Hearts will be added by JavaScript -->
+    </div>
+    
+    <!-- Meme Sequence Slides -->
+    <div class="slide active" id="slide1">
+        <div class="valentine-container">
+            <h2>Before we get to the important question...</h2>
+            <img src="image1.jpeg" alt="Funny meme 1" class="meme-img" onerror="this.style.display='none'">
+            <button class="continue-btn" onclick="nextSlide(1)">Continue</button>
+        </div>
+    </div>
+    
+    <div class="slide" id="slide2">
+        <div class="valentine-container">
+            <img src="image2.jpeg" alt="Funny meme 2" class="meme-img zoom-out" onerror="this.style.display='none'">
+            <button class="continue-btn" onclick="nextSlide(2)">Keep Going</button>
+        </div>
+    </div>
+    
+    <div class="slide" id="slide3">
+        <div class="valentine-container">
+            <img src="image3.jpg" alt="Funny meme 3" class="meme-img" onerror="this.style.display='none'">
+            <button class="continue-btn" onclick="nextSlide(3)">Almost There</button>
+        </div>
+    </div>
+    
+    <div class="slide" id="slide4">
+        <div class="valentine-container">
+            <img src="image4.jpg" alt="Funny meme 4" class="meme-img" onerror="this.style.display='none'">
+            <button class="continue-btn" onclick="showMainContent()">See the Question!</button>
+        </div>
+    </div>
+    
+    <!-- Main Content -->
+    <div id="main-content">
+        <div class="valentine-container">
+            <img src="floral.png" class="floral-decoration" id="floral1" onerror="this.style.display='none'">
+            <img src="floral.png" class="floral-decoration" id="floral2" onerror="this.style.display='none'">
+            
+            <h1>Will you go on a date with me? <span class="heart">❤</span></h1>
+            <p style="font-size: 1.5em; margin-bottom: 30px;">I promise it'll be more fun than these memes!</p>
+            
+            <div>
+                <button class="btn" onclick="celebrate()">ABSOLUTELY YES!</button>
+                <button class="btn" onclick="celebrate()">OF COURSE YES!</button>
+            </div>
+            
+            <p id="response"></p>
+        </div>
+    </div>
+    
+    <script>
+        // Create heart opening animation
+        function createHeartOpening() {
+            const container = document.getElementById('heart-opening');
+            const heartCount = 15;
+            
+            for (let i = 0; i < heartCount; i++) {
+                const heart = document.createElement('div');
+                heart.innerHTML = '❤';
+                heart.className = 'opening-heart';
+                heart.style.left = Math.random() * 100 + 'vw';
+                heart.style.top = Math.random() * 100 + 'vh';
+                heart.style.fontSize = (Math.random() * 60 + 40) + 'px';
+                heart.style.animationDelay = (Math.random() * 0.5) + 's';
+                heart.style.color = `hsl(${Math.random() * 60 + 330}, 100%, 70%)`;
+                
+                container.appendChild(heart);
+            }
+        }
+        
+        // Initialize the page
+        window.onload = function() {
+            createHeartOpening();
+            
+            // Hide all slides except the first one
+            document.getElementById('slide1').classList.add('active');
+            document.getElementById('slide2').style.display = 'none';
+            document.getElementById('slide3').style.display = 'none';
+            document.getElementById('slide4').style.display = 'none';
+        };
+        
+        let currentSlide = 1;
+        
+        function nextSlide(slideNum) {
+            // Hide current slide
+            const current = document.getElementById(`slide${slideNum}`);
+            current.classList.remove('active');
+            current.classList.add('inactive');
+            
+            setTimeout(() => {
+                current.style.display = 'none';
+                
+                // Show next slide
+                const next = document.getElementById(`slide${slideNum+1}`);
+                next.style.display = 'flex';
+                setTimeout(() => {
+                    next.classList.add('active');
+                }, 50);
+                
+                if(slideNum === 2) {
+                    // Trigger zoom-out animation for the second image
+                    const img = document.querySelector('#slide2 .meme-img');
+                    img.classList.add('zoom-out');
+                }
+            }, 1000);
+        }
+        
+        function showMainContent() {
+            // Hide last slide
+            const current = document.getElementById('slide4');
+            current.classList.remove('active');
+            current.classList.add('inactive');
+            
+            setTimeout(() => {
+                current.style.display = 'none';
+                document.getElementById('main-content').style.display = 'block';
+                createFloralBackground();
+            }, 1000);
+        }
+        
+        function celebrate() {
+            const responses = [
+                "Hooray! Let's make unforgettable memories! 💖",
+                "I knew you'd say yes! Get ready for magic! ✨",
+                "Best decision ever! Our adventure begins! 🌸",
+                "My heart is doing backflips! So excited! 💃",
+                "This calls for celebration! Confetti time! 🎊",
+                "Yesss! You just made my whole year! 🌟",
+                "Get ready for the most fun date ever! 🥳"
+            ];
+            
+            const randomResponse = responses[Math.floor(Math.random() * responses.length)];
+            document.getElementById('response').innerHTML = randomResponse;
+            
+            // Create floating hearts
+            for (let i = 0; i < 30; i++) {
+                createHeart();
+            }
+            
+            // Create confetti
+            for (let i = 0; i < 50; i++) {
+                createConfetti();
+            }
+        }
+        
+        function createHeart() {
+            const heart = document.createElement('div');
+            heart.innerHTML = '❤';
+            heart.className = 'floating-hearts';
+            heart.style.left = Math.random() * 100 + 'vw';
+            heart.style.top = Math.random() * 100 + 'vh';
+            heart.style.fontSize = (Math.random() * 30 + 20) + 'px';
+            heart.style.animationDuration = (Math.random() * 3 + 3) + 's';
+            heart.style.color = `hsl(${Math.random() * 60 + 330}, 100%, 70%)`;
+            
+            document.body.appendChild(heart);
+            
+            // Remove heart after animation
+            setTimeout(() => {
+                heart.remove();
+            }, 5000);
+        }
+        
+        function createConfetti() {
+            const confetti = document.createElement('div');
+            confetti.className = 'confetti';
+            confetti.style.left = Math.random() * 100 + 'vw';
+            confetti.style.top = '-10px';
+            confetti.style.backgroundColor = `hsl(${Math.random() * 360}, 100%, 70%)`;
+            confetti.style.width = (Math.random() * 15 + 5) + 'px';
+            confetti.style.height = (Math.random() * 15 + 5) + 'px';
+            confetti.style.borderRadius = Math.random() > 0.5 ? '50%' : '0';
+            confetti.style.animationDuration = (Math.random() * 2 + 2) + 's';
+            
+            document.body.appendChild(confetti);
+            
+            // Remove confetti after animation
+            setTimeout(() => {
+                confetti.remove();
+            }, 3000);
+        }
+        
+        function createFloralBackground() {
+            for (let i = 0; i < 10; i++) {
+                const floral = document.createElement('img');
+                floral.src = 'floral.png';
+                floral.className = 'floral-decoration';
+                floral.style.position = 'fixed';
+                floral.style.width = (Math.random() * 200 + 100) + 'px';
+                floral.style.height = (Math.random() * 200 + 100) + 'px';
+                floral.style.left = Math.random() * 100 + 'vw';
+                floral.style.top = Math.random() * 100 + 'vh';
+                floral.style.opacity = Math.random() * 0.5 + 0.3;
+                floral.style.transform = `rotate(${Math.random() * 360}deg)`;
+                floral.style.zIndex = '-1';
+                floral.style.pointerEvents = 'none';
+                floral.onerror = function() { this.style.display = 'none'; };
+                
+                document.body.appendChild(floral);
+            }
+        }
+    </script>
+</body>
+</html>
